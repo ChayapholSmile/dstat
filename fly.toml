@@ -1,17 +1,23 @@
-app = "dstat"
-primary_region = "sin"
+# fly.toml app configuration file generated for dstat-1 on 2026-03-13T08:32:24Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'dstat-1'
+primary_region = 'ams'
+
+[build]
 
 [http_service]
   internal_port = 8080
   force_https = true
-  
-  # ตั้งค่าการเปิด-ปิดเครื่องอัตโนมัติ
-  auto_stop_machines = true
+  auto_stop_machines = 'stop'
   auto_start_machines = true
-  min_machines_running = 1
+  min_machines_running = 0
+  processes = ['app']
 
-  # ระบบ Auto-scaling ตามโหลด
-  [http_service.concurrency]
-    type = "requests"
-    soft_limit = 300  # ถ้าเครื่องนี้รับเกิน 300 req/sec Fly จะเริ่มเปิดเครื่องใหม่
-    hard_limit = 500  # ถ้าเกิน 500 จะส่งไปเครื่องถัดไปทันที
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 256
